@@ -23,7 +23,7 @@ function App() {
     trpc.createClient({
       links: [
         httpBatchLink({
-          url: process.env.VITE_API_URL,
+          url: import.meta.env.VITE_API_URL,
           // url: 'http://localhost:5000/trpc',
           // // optional
           // headers() {
