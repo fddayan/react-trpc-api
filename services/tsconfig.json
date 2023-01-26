@@ -1,6 +1,6 @@
 {
   "extends": "../tsconfig.json",
-  "include": ["functions"],
+  "include": ["functions", "core"],
   "compilerOptions": {
     "strict": true,
     "module": "esnext",

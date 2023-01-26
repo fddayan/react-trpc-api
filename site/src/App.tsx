@@ -18,8 +18,13 @@ const DisplayUser = () => {
 }
 
 const Articles = () => {
+  const utils = trpc.useContext();
   const { data } = trpc.getArticles.useQuery();
-  const { mutateAsync } = trpc.createArticle.useMutation();
+  const { mutateAsync } = trpc.createArticle.useMutation({
+    onSuccess() {
+      utils.getArticles.invalidate();
+    }
+  });
 
   const handleCreateRandomArticle = async () => {
     mutateAsync({ title: `${Math.random()}`, url: `${Math.random()}` })
@@ -30,7 +35,7 @@ const Articles = () => {
       <button onClick={handleCreateRandomArticle}>Create Random Article</button>
       <ul>
         {data?.articles.map(a => (
-          <li>{a.title}</li>
+          <li key={a.title}>{a.title}</li>
         ))}
       </ul>
     </div>
