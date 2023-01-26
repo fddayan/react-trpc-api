@@ -11,7 +11,7 @@
 import { inferAsyncReturnType, initTRPC } from '@trpc/server';
 import { z } from 'zod';
 import { CreateAWSLambdaContextOptions, awsLambdaRequestHandler } from '@trpc/server/adapters/aws-lambda';
-import { APIGatewayProxyEventV2 } from 'aws-lambda';
+import { APIGatewayProxyEventV2, APIGatewayProxyStructuredResultV2, Context as APIGWContext } from 'aws-lambda';
 
 export const t = initTRPC.create();
 
@@ -32,7 +32,31 @@ export const createContext = ({
 
 export type Context = inferAsyncReturnType<typeof createContext>;
 
-export const handler = awsLambdaRequestHandler({
+const apiGatewayHandler = awsLambdaRequestHandler({
   router: appRouter,
   createContext,
 })
+
+export const handler = (event: APIGatewayProxyEventV2, context: APIGWContext) => {
+  event.headers['Access-Control-Allow-Origin'] = '*';
+  event.headers['Access-Control-Request-Method'] = '*';
+  event.headers['Access-Control-Allow-Methods'] = '*';
+  event.headers['Access-Control-Allow-Headers'] = '*';
+
+  if (event.requestContext.http.method === 'OPTIONS') {
+    const response: APIGatewayProxyStructuredResultV2 = {
+      statusCode: 200,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Request-Method':'*',
+        'Access-Control-Allow-Methods': '*',
+        'Access-Control-Allow-Headers':'*',
+      }
+    }
+    
+    return response;
+  }
+
+
+  return apiGatewayHandler(event, context);
+}
