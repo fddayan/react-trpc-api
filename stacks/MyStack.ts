@@ -1,13 +1,12 @@
 import { StackContext, Api, StaticSite, RDS } from "@serverless-stack/resources";
 
 export function MyStack({ stack }: StackContext) {
- const rds = new RDS(stack, "db", {
+  const rds = new RDS(stack, "db", {
     engine: "postgresql11.13",
     defaultDatabaseName: "main",
     migrations: "services/migrations",
     types: "services/core/sql.generated.ts",
   });
-
 
   const api = new Api(stack, "api", {
     defaults: {

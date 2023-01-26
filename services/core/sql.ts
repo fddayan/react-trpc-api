@@ -4,6 +4,15 @@ import { DataApiDialect } from "kysely-data-api";
 import type { Database } from "./sql.generated";
 import { RDS } from "@serverless-stack/node/rds";
 
+declare module "@serverless-stack/node/rds" {
+  export interface RDSResources {
+    "db": {
+      clusterArn: string;
+secretArn: string;
+defaultDatabaseName: string;
+    }
+  }
+}
 
 export const DB = new Kysely<Database>({
   dialect: new DataApiDialect({
