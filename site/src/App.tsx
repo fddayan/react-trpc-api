@@ -17,13 +17,33 @@ const DisplayUser = () => {
   )
 }
 
+const Articles = () => {
+  const { data } = trpc.getArticles.useQuery();
+  const { mutateAsync } = trpc.createArticle.useMutation();
+
+  const handleCreateRandomArticle = async () => {
+    mutateAsync({ title: `${Math.random()}`, url: `${Math.random()}` })
+  }
+
+  return (
+    <div>
+      <button onClick={handleCreateRandomArticle}>Create Random Article</button>
+      <ul>
+        {data?.articles.map(a => (
+          <li>{a.title}</li>
+        ))}
+      </ul>
+    </div>
+  )
+}
+
 function App() {
   const [queryClient] = useState(() => new QueryClient());
   const [trpcClient] = useState(() =>
     trpc.createClient({
       links: [
         httpBatchLink({
-          url: `${import.meta.env.VITE_API_URL}/trpc`,
+          url: import.meta.env.VITE_API_URL,
           // url: 'http://localhost:5000/trpc',
           // // optional
           // headers() {
@@ -40,6 +60,7 @@ function App() {
     <trpc.Provider client={trpcClient} queryClient={queryClient}>
       <QueryClientProvider client={queryClient}>
         <DisplayUser />
+        <Articles />
       </QueryClientProvider>
     </trpc.Provider>
   )
