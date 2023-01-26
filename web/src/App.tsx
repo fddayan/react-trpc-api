@@ -19,8 +19,8 @@ const DisplayUser = () => {
 
 const Articles = () => {
   const utils = trpc.useContext();
-  const { data } = trpc.getArticles.useQuery();
-  const { mutateAsync } = trpc.createArticle.useMutation({
+  const { data, isFetching } = trpc.getArticles.useQuery();
+  const { mutateAsync, isLoading } = trpc.createArticle.useMutation({
     onSuccess() {
       utils.getArticles.invalidate();
     }
@@ -29,6 +29,9 @@ const Articles = () => {
   const handleCreateRandomArticle = async () => {
     mutateAsync({ title: `${Math.random()}`, url: `${Math.random()}` })
   }
+
+  if (isLoading) return <div>Mutating...</div>
+  if (isFetching) return <div>Loading...</div>
 
   return (
     <div>

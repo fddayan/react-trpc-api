@@ -24,6 +24,6 @@
   },
   "workspaces": [
     "services",
-    "site"
+    "web"
   ]
 }

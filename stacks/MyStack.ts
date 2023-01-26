@@ -20,7 +20,7 @@ export function MyStack({ stack }: StackContext) {
   });
 
   const site = new StaticSite(stack, "react", {
-    path: "site",
+    path: "web",
     buildOutput: "dist",
     buildCommand: "npm run build",
     environment: {
