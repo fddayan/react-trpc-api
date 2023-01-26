@@ -8,7 +8,7 @@ export function MyStack({ stack }: StackContext) {
     },
   });
 
-  new StaticSite(stack, "react", {
+  const site = new StaticSite(stack, "react", {
     path: "site",
     buildOutput: "dist",
     buildCommand: "npm run build",
@@ -17,4 +17,8 @@ export function MyStack({ stack }: StackContext) {
       VITE_API_URL: api.url,
     }, 
   });
+
+  stack.addOutputs({
+    url: site.url
+  })
 }
