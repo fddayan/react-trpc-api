@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
 import './App.css'
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -11,8 +10,7 @@ const DisplayUser = () => {
 
   return (
     <div>
-      Name:
-      {data?.name}
+      Name:{data?.name}
     </div>
   )
 }
