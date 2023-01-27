@@ -1,0 +1,14 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "pipeline": {
+    "typecheck": {
+      "inputs": ["**/*.ts", "**/*.tsx"]
+    },
+    "build": {
+      "outputs": ["dist/**"]
+    },
+    "lint": {
+      "inputs": ["**/*.ts", "**/*.tsx", ".eslintrc.js"]
+    }
+  }
+}
