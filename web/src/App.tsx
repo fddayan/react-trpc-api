@@ -1,19 +1,15 @@
-import { useState } from 'react'
-import './App.css'
+import { useState } from "react";
+import "./App.css";
 
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { httpBatchLink } from '@trpc/client';
-import { trpc } from './utils/trpc';
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { httpBatchLink } from "@trpc/client";
+import { trpc } from "./utils/trpc";
 
 const DisplayUser = () => {
   const { data } = trpc.getUser.useQuery("1234");
 
-  return (
-    <div>
-      Name:{data?.name}
-    </div>
-  )
-}
+  return <div>Name:{data?.name}</div>;
+};
 
 const Articles = () => {
   const utils = trpc.useContext();
@@ -21,27 +17,27 @@ const Articles = () => {
   const { mutateAsync, isLoading } = trpc.createArticle.useMutation({
     onSuccess() {
       utils.getArticles.invalidate();
-    }
+    },
   });
 
   const handleCreateRandomArticle = async () => {
-    mutateAsync({ title: `${Math.random()}`, url: `${Math.random()}` })
-  }
+    mutateAsync({ title: `${Math.random()}`, url: `${Math.random()}` });
+  };
 
-  if (isLoading) return <div>Mutating...</div>
-  if (isFetching) return <div>Loading...</div>
+  if (isLoading) return <div>Mutating...</div>;
+  if (isFetching) return <div>Loading...</div>;
 
   return (
     <div>
       <button onClick={handleCreateRandomArticle}>Create Random Article</button>
       <ul>
-        {data?.articles.map(a => (
+        {data?.articles.map((a) => (
           <li key={a.title}>{a.title}</li>
         ))}
       </ul>
     </div>
-  )
-}
+  );
+};
 
 function App() {
   const [queryClient] = useState(() => new QueryClient());
@@ -59,7 +55,7 @@ function App() {
           // },
         }),
       ],
-    }),
+    })
   );
 
   return (
@@ -69,7 +65,7 @@ function App() {
         <Articles />
       </QueryClientProvider>
     </trpc.Provider>
-  )
+  );
 }
 
-export default App
+export default App;

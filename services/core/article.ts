@@ -1,7 +1,7 @@
-export * as Article from "./article";
-
 import { ulid } from "ulid";
 import { SQL } from "./sql";
+
+export * as Article from "./article";
 
 export async function create({ title, url }: { title: string, url: string }) {
   const [result] = await SQL.DB.insertInto("article")

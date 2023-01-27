@@ -2,7 +2,6 @@ import { initTRPC } from '@trpc/server';
 import { z } from 'zod';
 
 import { Article } from "../core/article";
-import { Article as IArticle } from '../core/sql.generated';
 
 export const t = initTRPC.create();
 

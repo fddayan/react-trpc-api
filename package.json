@@ -9,13 +9,19 @@
     "remove": "sst remove",
     "console": "sst console",
     "typecheck": "tsc --noEmit",
-    "test": "sst bind -- vitest run"
+    "test": "sst bind -- vitest run",
+    "prepare": "husky install",
+    "lint:staged": "lint-staged",
+    "lint": "turbo lint"
   },
   "devDependencies": {
     "@serverless-stack/cli": "^1.18.4",
     "@serverless-stack/resources": "^1.18.4",
     "@tsconfig/node16": "^1.0.3",
     "aws-cdk-lib": "2.50.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.1.0",
+    "turbo": "^1.7.0",
     "typescript": "^4.9.4",
     "vitest": "^0.28.1"
   },
@@ -26,5 +32,10 @@
     "services",
     "web",
     "packages/*"
-  ]
+  ],
+  "lint-staged": {
+    "{apps,libs,packages}/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
+      "prettier --single-quote --write --ignore-unknown"
+    ]
+  }
 }
