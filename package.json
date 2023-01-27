@@ -9,6 +9,7 @@
     "remove": "sst remove",
     "console": "sst console",
     "typecheck": "tsc --noEmit",
+    "typecheck:apps": "turbo typecheck",
     "test": "sst bind -- vitest run",
     "prepare": "husky install",
     "lint:staged": "lint-staged",
